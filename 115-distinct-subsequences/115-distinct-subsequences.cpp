@@ -1,23 +1,22 @@
 class Solution {
+typedef long long ll;
+int dp[2000][2000];
 public:
-    int n , m;
-    string source , target;
-    int mem[1009][1009];
-    int solve(int idx1, int idx2){
-        if(idx2 == m)return 1;
-        if(idx1 == n)return 0;
-        if(mem[idx1][idx2] != -1)return mem[idx1][idx2];
-        int path1 = 0 , path2 = 0;
-        if(source[idx1] == target[idx2]) path1 = solve(idx1+1 , idx2+1);
-        path2 = solve(idx1+1, idx2);
-        return mem[idx1][idx2] = path1 + path2;
+    ll solve(ll i,ll j,string &s,string &t){
+        if(j == -1)return 1;
+        if(i == -1)return 0;
+        int &ret=dp[i][j];
+        if(ret!=-1)return ret;
+        int option1,option2;
+        if(s[i]==t[j]){
+            option1=solve(i-1,j-1,s,t);
+            option2=solve(i-1,j,s,t);
+            return ret=option1+option2;
+        }
+        return ret=solve(i-1,j,s,t);
     }
     int numDistinct(string s, string t) {
-        n  = s.size();
-        m = t.size();
-        source = s;
-        target = t;
-        memset(mem, -1, sizeof mem);
-        return solve(0,0);
+        memset(dp,-1,sizeof dp);
+        return solve(s.size(),t.size(),s,t);
     }
 };
