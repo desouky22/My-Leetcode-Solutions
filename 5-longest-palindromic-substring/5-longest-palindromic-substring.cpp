@@ -1,43 +1,30 @@
 class Solution {
 public:
-string str;
-string go(int x){
-    string temp1 , temp2;
-    int l = x - 1 , r = x + 1;
-    while(l >= 0 and r < str.size()){
-        if(str[l] == str[r]) l-- , r++;
-        else break;
+    string s;
+    int mem[1009][1009];
+    int solve(int idx1 , int idx2){
+        if(idx1 >= idx2) return 1;
+        if(mem[idx1][idx2] != -1)return mem[idx1][idx2];
+        if(s[idx1] == s[idx2]) return mem[idx1][idx2] = solve(idx1+1, idx2-1);
+        return mem[idx1][idx2] = 0;
     }
-    l++ , r--;
-
-    for(int x = l; x<=r; x++){
-        if(x>=0 and x < str.size())
-            temp1.push_back(str[x]);
+    
+    string longestPalindrome(string str) {
+        memset(mem, -1, sizeof mem);
+        s = str;
+        solve(0, s.size()-1);
+        string ans;
+        ans+=s[0];
+        int bestVal = 1;
+        for(int x = 0; x<s.size(); x++){
+            for(int y = x+1; y<s.size(); y++){
+                if(solve(x,y) != 0 and bestVal < (y-x+1)){
+                    bestVal = y-x+1;
+                    ans = "";
+                    for(int z = x; z<=y; z++)ans+=s[z];
+                }
+            }
+        }
+        return ans;
     }
-
-    l = x , r = x+1;
-    while(l >= 0 and r < str.size()){
-        if(str[l] == str[r]) l-- , r++;
-        else break;
-    }
-    l++ , r--;
-    for(int x = l; x<=r; x++){
-        if(x>=0 and x < str.size())
-            temp2.push_back(str[x]);
-    }
-    cout<<temp1<<" "<<temp2<<"\n";
-
-    return (temp1.size() > temp2.size()) ? temp1 : temp2;
-}
-
-string longestPalindrome(string s) {
-    str = s; string ret;
-    ret+=s[0];
-    cout<<ret<<"\n";
-    for(int x = 0; x<s.size(); x++){
-        string subStr = go(x);
-        if(subStr.size() > ret.size()) ret = subStr;
-    }
-    return ret;
-}
 };
