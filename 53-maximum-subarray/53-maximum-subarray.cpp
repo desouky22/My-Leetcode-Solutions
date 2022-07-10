@@ -7,7 +7,6 @@ public:
         while(end < n){
             sum += nums[end];
             ans = max(ans, sum);
-            cout<<sum<<" ";
             if(sum < 0){
                 sum = 0;
                 start = end+1;
