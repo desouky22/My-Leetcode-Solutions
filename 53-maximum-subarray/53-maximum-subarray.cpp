@@ -1,19 +1,16 @@
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
-        int start = 0 , end = 0;
-        int n = nums.size();
-        int ans = INT_MIN , sum = 0;
-        while(end < n){
-            sum += nums[end];
-            ans = max(ans, sum);
-            if(sum < 0){
-                sum = 0;
-                start = end+1;
-            }
-            end++;
+        vector<int>prefixSum(nums.size());
+        prefixSum[0] = nums[0];
+        for(int x = 1; x<nums.size(); x++) prefixSum[x] = prefixSum[x-1] + nums[x];
+        multiset<int>ms;
+        int ans = *max_element(nums.begin() , nums.end());
+        for(int x = 0; x<nums.size(); x++){
+            ans = max(ans, prefixSum[x]);
+            ans = max(ans, prefixSum[x] - *ms.begin());
+            ms.insert(prefixSum[x]);
         }
-        
         return ans;
     }
 };
