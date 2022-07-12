@@ -1,23 +1,20 @@
 class Solution {
 public:
     int maxSubarraySumCircular(vector<int>& nums) {
-        int mx = *max_element(nums.begin() , nums.end());
-        if(mx <= 0)return mx;
         int n = nums.size();
-        vector<int> v = nums;
-        for(int x = 0; x<nums.size(); x++) v.push_back(nums[x]);
-        
+        vector<int>v = nums;
+        for(auto it: nums) v.push_back(it);
         vector<int>prefixSum(v.size());
         prefixSum[0] = v[0];
-        for(int x = 1; x<v.size(); x++)prefixSum[x] = v[x] + prefixSum[x-1];
-        int ret = INT_MIN;
+        for(int x = 1; x<v.size(); x++) prefixSum[x] = prefixSum[x-1] + v[x];
+        int ans = *max_element(v.begin() , v.end());
         multiset<int>ms;
         for(int x = 0; x<v.size(); x++){
-            if(x > n) ms.erase(ms.find(prefixSum[x-n-1]));
+            if(x < n) ans = max(ans, prefixSum[x]);
+            ans = max(ans, prefixSum[x] - *ms.begin());
             ms.insert(prefixSum[x]);
-            ret = max(ret, prefixSum[x] - *ms.begin());
+            if(ms.size() == n) ms.erase(ms.find(prefixSum[x - n + 1]));
         }
-        return ret;
-    }    
- 
+        return ans;
+    }
 };
