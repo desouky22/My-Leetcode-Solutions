@@ -3,8 +3,8 @@ public:
     typedef long long ll;
     vector<string>v;
     string target;
-    map<string , ll> mem;
-    map<string, bool> validPrefix;
+    unordered_map<string , ll> mem;
+    unordered_map<string, bool> validPrefix;
     ll solve(string s = ""){
         if(!validPrefix[s])return -1;
         if(s.size() > target.size()) return -1;
