@@ -1,6 +1,6 @@
 class Solution {
 public:
-    typedef map<int, vector<int>> GRAPH;
+    typedef unordered_map<int, vector<int>> GRAPH;
     vector<int>ret;
     void dfs(int node, int prev, GRAPH& graph){
         ret.push_back(node);
@@ -12,7 +12,7 @@ public:
     }
     vector<int> restoreArray(vector<vector<int>>& pairs) {
         GRAPH graph;
-        set<int>nodes;
+        unordered_set<int>nodes;
         for(int x = 0; x<pairs.size(); x++){
             graph[pairs[x][0]].push_back(pairs[x][1]);
             graph[pairs[x][1]].push_back(pairs[x][0]);
