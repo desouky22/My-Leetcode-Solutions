@@ -7,11 +7,8 @@ public:
     vector<int> subordinates;
 };
 */
-vector<bool>vis;
 vector<Employee*> emps;
-
 int dfs(int id){
-    vis[id] = true;
     Employee* emp;
     for(auto it : emps){
         if(it->id == id){
@@ -31,7 +28,6 @@ class Solution {
 public:
     int getImportance(vector<Employee*> employees, int id) {
         emps = employees;
-        vis.resize(3000, false);
         return dfs(id);
         return 0;
     }
