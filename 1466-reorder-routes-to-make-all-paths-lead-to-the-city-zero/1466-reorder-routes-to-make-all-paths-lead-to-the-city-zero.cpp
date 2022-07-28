@@ -1,7 +1,7 @@
 class Solution {
 public:
     typedef vector<vector<int>> GRAPH;
-    map<int, map<int , bool>> directedEdge;
+    unordered_map<int, unordered_map<int , bool>> directedEdge;
     vector<bool>vis;
     int ans = 0;
     
